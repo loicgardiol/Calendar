@@ -1710,6 +1710,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     dayCell.headerHeight = self.dayHeaderHeight;
     dayCell.separatorColor = self.daySeparatorsColor;
     dayCell.dotColor = self.eventIndicatorDotColor;
+    dayCell.horizontalDayLabelOffset = self.numberOfVisibleDays == 1 ? -self.timeColumnWidth : 0.0;
+
 
     NSDate *date = [self dateFromDayOffset:indexPath.section];
     

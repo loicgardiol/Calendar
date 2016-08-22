@@ -101,35 +101,57 @@ static const CGFloat dotSize = 4;
 
 - (void)layoutSubviews
 {
-	[super layoutSubviews];
-	
-	static CGFloat kSpace = 2;
-
-	[CATransaction begin];
-	[CATransaction setDisableActions:YES];
-
-	if (self.headerHeight != 0) {
-		CGSize headerSize = CGSizeMake(self.contentView.bounds.size.width, self.headerHeight);
-		CGSize labelSize = CGSizeMake(headerSize.width - 2*kSpace, headerSize.height - (2 * dotSize + 2 * kSpace));
-		self.dayLabel.frame = (CGRect) { 2, 0, labelSize };
-		
-		self.dotLayer.position = CGPointMake(self.contentView.center.x, headerSize.height - 1.2 * dotSize);
-		self.dotLayer.fillColor = self.dotColor.CGColor;
-		self.activityIndicatorView.center = CGPointMake(self.contentView.center.x, headerSize.height - 1.2 * dotSize);
-		
-		if (self.accessoryTypes & MGCDayColumnCellAccessoryMark) {
-			self.dayLabel.layer.cornerRadius = 6;
-			self.dayLabel.layer.backgroundColor = self.markColor.CGColor;
-		}
-		else  {
-			self.dayLabel.layer.cornerRadius = 0;
-			self.dayLabel.layer.backgroundColor = [UIColor clearColor].CGColor;
-		}
-	}
-	
-	self.dotLayer.hidden = !(self.accessoryTypes & MGCDayColumnCellAccessoryDot) || self.headerHeight == 0;
-	self.dayLabel.hidden = (self.headerHeight == 0);
-
+    [super layoutSubviews];
+    
+    static CGFloat kSpace = 2;
+    
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    
+    BOOL showDot = [self.dotColor isEqual:[UIColor clearColor]];
+    
+    if (self.headerHeight != 0) {
+        CGSize headerSize = CGSizeMake(self.contentView.bounds.size.width, self.headerHeight);
+        
+        if (showDot) {
+            CGSize labelSize = CGSizeMake(headerSize.width - 2*kSpace - self.horizontalDayLabelOffset, headerSize.height - (2 * dotSize + 2 * kSpace));
+            self.dayLabel.frame = (CGRect) { 2 + self.horizontalDayLabelOffset, 0, labelSize };
+            
+            self.dotLayer.position = CGPointMake(self.contentView.center.x, headerSize.height - 1.2 * dotSize);
+            self.dotLayer.fillColor = self.dotColor.CGColor;
+            self.activityIndicatorView.center = CGPointMake(self.contentView.center.x, headerSize.height - 1.2 * dotSize);
+            
+            if (self.accessoryTypes & MGCDayColumnCellAccessoryMark) {
+                self.dayLabel.layer.cornerRadius = 6;
+                self.dayLabel.layer.backgroundColor = self.markColor.CGColor;
+            }
+            else  {
+                self.dayLabel.layer.cornerRadius = 0;
+                self.dayLabel.layer.backgroundColor = [UIColor clearColor].CGColor;
+            }
+        } else {
+            CGSize labelSize = CGSizeMake(headerSize.width - 2*kSpace - self.horizontalDayLabelOffset, headerSize.height);
+            self.dayLabel.frame = (CGRect) { 2 + self.horizontalDayLabelOffset, 0, labelSize };
+            
+            self.dotLayer.position = CGPointMake(self.contentView.center.x, headerSize.height - 1.2 * dotSize);
+            self.dotLayer.fillColor = self.dotColor.CGColor;
+            self.activityIndicatorView.center = CGPointMake(self.contentView.center.x, headerSize.height);
+            
+            if (self.accessoryTypes & MGCDayColumnCellAccessoryMark) {
+                self.dayLabel.layer.cornerRadius = 6;
+                self.dayLabel.layer.backgroundColor = self.markColor.CGColor;
+            }
+            else  {
+                self.dayLabel.layer.cornerRadius = 0;
+                self.dayLabel.layer.backgroundColor = [UIColor clearColor].CGColor;
+            }
+        }
+        
+    }
+    
+    self.dotLayer.hidden = !showDot || !(self.accessoryTypes & MGCDayColumnCellAccessoryDot) || self.headerHeight == 0;
+    self.dayLabel.hidden = (self.headerHeight == 0);
+    
     // border
     CGRect borderFrame = CGRectZero;
     if (self.accessoryTypes & MGCDayColumnCellAccessoryBorder) {
@@ -149,6 +171,11 @@ static const CGFloat dotSize = 4;
 - (void)setAccessoryTypes:(MGCDayColumnCellAccessoryType)accessoryTypes
 {
     _accessoryTypes = accessoryTypes;
+    [self setNeedsLayout];
+}
+
+- (void)setHorizontalDayLabelOffset:(CGFloat)horizontalDayLabelOffset {
+    _horizontalDayLabelOffset = horizontalDayLabelOffset;
     [self setNeedsLayout];
 }
 

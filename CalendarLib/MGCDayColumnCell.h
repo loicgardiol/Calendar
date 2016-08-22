@@ -54,6 +54,7 @@ typedef enum : NSUInteger
 @property (nonatomic) UIColor *dotColor;								// color of the dot (default is blue)
 @property (nonatomic) UIColor *separatorColor;                          // color of the separator line (default is light gray)
 @property (nonatomic) CGFloat headerHeight;								// height of the header
+@property (nonatomic) CGFloat horizontalDayLabelOffset;                 // shifts the day label horizontally. 0 by default.
 
 - (void)setActivityIndicatorVisible:(BOOL)visible;
 
