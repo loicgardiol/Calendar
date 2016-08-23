@@ -1414,6 +1414,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 #pragma mark - Reloading content
 
+// public
+- (void)reloadAfterSizeChange {
+    [self reloadCollectionViews];
+}
+
 // this is called whenever we recenter the views during scrolling
 // or when the number of visible days or the date range changes
 - (void)reloadCollectionViews

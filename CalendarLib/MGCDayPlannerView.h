@@ -421,6 +421,11 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerTimeMark) {
  */
 - (void)deselectEvent;
 
+/*!
+	@abstract	Forces to relayout.
+	@discussion You might need to call this if the size of the container view changes while you want to keep the same configuration.
+ */
+- (void)reloadAfterSizeChange;
 
 /*!
 	@group Reloading events
