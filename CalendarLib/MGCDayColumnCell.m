@@ -108,7 +108,7 @@ static const CGFloat dotSize = 4;
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     
-    BOOL showDot = [self.dotColor isEqual:[UIColor clearColor]];
+    BOOL showDot = ![self.dotColor isEqual:[UIColor clearColor]];
     
     if (self.headerHeight != 0) {
         CGSize headerSize = CGSizeMake(self.contentView.bounds.size.width, self.headerHeight);
