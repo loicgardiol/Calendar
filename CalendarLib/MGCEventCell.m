@@ -48,8 +48,9 @@
 	if (eventView != _eventView) {
 		[self.eventView removeFromSuperview];
 		[self.contentView addSubview:eventView];
-		[self setNeedsLayout];
-		
+        eventView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:@{@"view": eventView}]];
+		[self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:@{@"view": eventView}]];
 		_eventView = eventView;
 		_eventView.visibleHeight = self.visibleHeight;
 	}
@@ -73,11 +74,4 @@
 {
 	[super prepareForReuse];
 }
-
-- (void)layoutSubviews
-{
-	[super layoutSubviews];
-	self.eventView.frame = self.contentView.bounds;
-}
-
 @end
