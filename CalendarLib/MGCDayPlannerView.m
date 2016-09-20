@@ -659,8 +659,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	y = fmaxf(fminf(y, self.timedEventsView.contentSize.height - self.timedEventsView.bounds.size.height), 0);
 	CGFloat x = [self xOffsetFromDayOffset:[self dayOffsetFromDate:dayStart]];
 
+    x = roundf(x);
+    y = roundf(y);
+    
 	CGPoint offset = self.timedEventsView.contentOffset;
-
+    
 	MGCDayPlannerView * __weak weakSelf = self;
 	dispatch_block_t completion = ^{
 		weakSelf.userInteractionEnabled = YES;
@@ -670,16 +673,25 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	};
 	
 	if (options == MGCDayPlannerScrollTime) {
+        if (fabs(offset.y - y) < 1.0) {
+            return;
+        }
 		self.userInteractionEnabled = NO;
 		offset.y = y;
 		[self setTimedEventsViewContentOffset:offset animated:animated completion:completion];
 	}
 	else if (options == MGCDayPlannerScrollDate) {
+        if (fabs(offset.x - x) < 1.0) {
+            return;
+        }
 		self.userInteractionEnabled = NO;
 		offset.x = x;
 		[self setTimedEventsViewContentOffset:offset animated:animated completion:completion];
 	}
 	else if (options == MGCDayPlannerScrollDateTime) {
+        if (fabs(offset.x - x) < 1.0 && fabs(offset.y - y) < 1.0) {
+            return;
+        }
 		self.userInteractionEnabled = NO;
 		offset.x = x;
 		[self setTimedEventsViewContentOffset:offset animated:animated completion:^(void){
