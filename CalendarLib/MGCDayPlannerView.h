@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerTimeMark) {
 
 /*!
 	@abstract	Returns the number of days the view shows at once, i.e the number of columns displayed.
-	@discussion The default value is 7.
+	@discussion The default value is 5.
 	@discussion If a date range is specified and the total number of scrollable days is less than the value of `numberOfVisibleDays`, 
 				then this number is used instead.
 	@see		calendar
@@ -228,7 +228,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerTimeMark) {
 
 /*!
 	@abstract	Determines whether paging is enabled for this day planner view.
-	@discussion If the value of this property is YES and the number of visible days is equal or greater than 7
+	@discussion If the value of this property is YES and the number of visible days is equal or greater than 5
 				(i.e. the view is showing at least a week), the day planner view stops on the current calendar starting day of
 				the week when the user scrolls.
 				If set to YES but the view is showing less than a week, it stops on multiples of the view’s bounds.
@@ -251,7 +251,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerTimeMark) {
 
 /*!
 	@abstract	Scrolls the view to the next "logical" date.
-				If the view shows at least 7 days, it is the next start of a week,
+				If the view shows at least 5 days, it is the next start of a week,
 				otherwise it is the first day not currently visible.
 	@param		animated	Specify YES to animate the scrolling behavior or NO to adjust the visible content immediately.
 	@param		date		If not nil, it will contain on return the date that was scrolled into view.
@@ -261,7 +261,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerTimeMark) {
 
 /*!
 	@abstract	Scrolls the view to the previous "logical" date.
-				If the view shows at least 7 days, it is the previous start of a week,
+				If the view shows at least 5 days, it is the previous start of a week,
 				otherwise it is the first day not currently visible.
 	@param		animated	Specify YES to animate the scrolling behavior or NO to adjust the visible content immediately.
 	@param		date		If not nil, it will contain on return the date that was scrolled into view.

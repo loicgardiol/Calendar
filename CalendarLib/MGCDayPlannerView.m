@@ -169,7 +169,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 - (void)setup
 {
-	_numberOfVisibleDays = 7;
+	_numberOfVisibleDays = 5;
 	_hourSlotHeight = 65.;
 	_hourRange = NSMakeRange(0, 24);
 	_timeColumnWidth = 60.;
@@ -739,14 +739,14 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	return self.dateRange != nil ? self.dateRange.start : nil;
 }
 
-// if the view shows at least 7 days, returns the next start of a week after date,
+// if the view shows at least 5 days, returns the next start of a week after date,
 // otherwise returns date plus the number of visible days, within the limits of the view day range
 - (NSDate*)nextDateForPagingAfterDate:(NSDate*)date
 {
 	NSAssert(date, @"nextPageForPagingAfterDate: was passed nil date");
 	
 	NSDate *nextDate;
-	if (self.numberOfVisibleDays >= 7) {
+	if (self.numberOfVisibleDays >= 5) {
 		nextDate = [self.calendar mgc_nextStartOfWeekForDate:date];
 	}
 	else {
@@ -762,33 +762,29 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	return nextDate;
 }
 
-// If the view shows at least 7 days, returns the previous start of a week before date,
+// If the view shows at least 5 days, returns the previous start of a week before date,
 // otherwise returns date minus the number of visible days, within the limits of the view day range
 - (NSDate*)prevDateForPagingBeforeDate:(NSDate*)date
 {
-	NSAssert(date, @"prevDateForPagingBeforeDate: was passed nil date");
-	
-	NSDate *prevDate;
-	if (self.numberOfVisibleDays >= 7) {
-		prevDate = [self.calendar mgc_startOfWeekForDate:date];
-		if ([prevDate isEqualToDate:date]) {
-			NSDateComponents* comps = [NSDateComponents new];
-			comps.day = -7;
-			prevDate = [self.calendar dateByAddingComponents:comps toDate:date options:0];
-		}
-	}
-	else {
-		NSDateComponents *comps = [NSDateComponents new];
-		comps.day = -self.numberOfVisibleDays;
-		prevDate = [self.calendar dateByAddingComponents:comps toDate:date options:0];
-	}
-	
-	NSDate *minScrollable = [self minScrollableDate];
-	if (minScrollable != nil && [prevDate compare:minScrollable] == NSOrderedAscending) {
-		prevDate = minScrollable;
-	}
-	return prevDate;
-	
+    NSAssert(date, @"prevDateForPagingBeforeDate: was passed nil date");
+    
+    NSDate *prevDate;
+    if (self.numberOfVisibleDays >= 5) {
+        prevDate = [self.calendar mgc_startOfWeekForDate:date];
+        NSDateComponents* comps = [NSDateComponents new];
+        comps.day = -7;
+        prevDate = [self.calendar dateByAddingComponents:comps toDate:prevDate options:0];
+    }
+    else {
+        NSDateComponents *comps = [NSDateComponents new];
+        comps.day = -self.numberOfVisibleDays;
+        prevDate = [self.calendar dateByAddingComponents:comps toDate:date options:0];
+    }
+    NSDate *minScrollable = [self minScrollableDate];
+    if (minScrollable != nil && [prevDate compare:minScrollable] == NSOrderedAscending) {
+        prevDate = minScrollable;
+    }
+    return prevDate;
 }
 
 #pragma mark - Subviews
