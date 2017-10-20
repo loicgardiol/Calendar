@@ -41,29 +41,28 @@
 
 @implementation MGCDayPlannerViewController
 
-- (MGCDayPlannerView*)dayPlannerView
-{
-	return (MGCDayPlannerView*)self.view;
-}
-
-- (void)setDayPlannerView:(MGCDayPlannerView*)dayPlannerView
-{
-	[super setView:dayPlannerView];
-	
-	if (!dayPlannerView.dataSource)
-		dayPlannerView.dataSource = self;
-	
-	if (!dayPlannerView.delegate)
-		dayPlannerView.delegate = self;
-}
-
 #pragma mark - UIViewController
 
-- (void)loadView
+- (void)viewDidLoad
 {
-	MGCDayPlannerView *dayPlannerView = [[MGCDayPlannerView alloc]initWithFrame:CGRectZero];
-	dayPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.dayPlannerView = dayPlannerView;
+    [super viewDidLoad];
+    MGCDayPlannerView *dayPlannerView = [[MGCDayPlannerView alloc]initWithFrame:CGRectZero];
+    dayPlannerView.dataSource = self;
+    dayPlannerView.delegate = self;
+    if (@available(iOS 11.0, *)) {
+        dayPlannerView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:dayPlannerView];
+        NSLayoutConstraint* top = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+        NSLayoutConstraint* left = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+        NSLayoutConstraint* bottom = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+        NSLayoutConstraint* right = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
+        [self.view addConstraints:@[top, left, bottom, right]];
+    } else {
+        dayPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        dayPlannerView.frame = self.view.bounds;
+        [self.view addSubview:dayPlannerView];
+    }
+    self.dayPlannerView = dayPlannerView;
     self.dayPlannerView.autoresizesSubviews = YES;
 }
 
@@ -83,7 +82,7 @@
     
     self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-    [self.view addSubview:self.headerView];
+    [self.dayPlannerView addSubview:self.headerView];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
