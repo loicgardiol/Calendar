@@ -911,9 +911,17 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
 	if (!_allDayEventsBackgroundView) {
 		_allDayEventsBackgroundView = [[UIView alloc] initWithFrame:CGRectNull];
-		_allDayEventsBackgroundView.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.83 alpha:1.];
+		if (@available(iOS 13.0, *)) {
+            _allDayEventsBackgroundView.backgroundColor = [UIColor separatorColor];
+        } else {
+            _allDayEventsBackgroundView.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.83 alpha:1.];
+        }
 		_allDayEventsBackgroundView.clipsToBounds = YES;
-		_allDayEventsBackgroundView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+		if (@available(iOS 13.0, *)) {
+            _allDayEventsBackgroundView.layer.borderColor = [UIColor separatorColor].CGColor;
+        } else {
+            _allDayEventsBackgroundView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        }
 		_allDayEventsBackgroundView.layer.borderWidth = 1;
 	}
 	return _allDayEventsBackgroundView;
