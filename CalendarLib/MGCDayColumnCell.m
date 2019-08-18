@@ -50,7 +50,11 @@ static const CGFloat dotSize = 4;
     if (self = [super initWithFrame:frame]) {
 		_markColor = [UIColor blackColor];
 		_dotColor = [UIColor blueColor];
-        _separatorColor = [UIColor lightGrayColor];
+        if (@available(iOS 13.0, *)) {
+            _separatorColor = [UIColor separatorColor];
+        } else {
+            _separatorColor = [UIColor lightGrayColor];
+        }
 		_headerHeight = 50;
 		
 		_dayLabel = [[UILabel alloc] initWithFrame:CGRectNull];

@@ -174,8 +174,16 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	_hourRange = NSMakeRange(0, 24);
 	_timeColumnWidth = 60.;
 	_dayHeaderHeight = 40.;
-    _daySeparatorsColor = [UIColor lightGrayColor];
-    _timeSeparatorsColor = [UIColor lightGrayColor];
+    if (@available(iOS 13.0, *)) {
+        _daySeparatorsColor = [UIColor separatorColor];
+    } else {
+        _daySeparatorsColor = [UIColor lightGrayColor];
+    }
+    if (@available(iOS 13.0, *)) {
+        _timeSeparatorsColor = [UIColor separatorColor];
+    } else {
+        _timeSeparatorsColor = [UIColor lightGrayColor];
+    }
     _currentTimeColor = [UIColor redColor];
     _eventIndicatorDotColor = [UIColor blueColor];
 	_showsAllDayEvents = YES;
@@ -190,7 +198,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	_reuseQueue = [[MGCReusableObjectQueue alloc] init];
 	_loadingDays = [NSMutableOrderedSet orderedSetWithCapacity:14];
 	
-	self.backgroundColor = [UIColor whiteColor];
+	if (@available(iOS 13.0, *)) {
+        self.backgroundColor = UIColor.systemBackgroundColor;
+    } else {
+        self.backgroundColor = UIColor.whiteColor;
+    }
 	self.autoresizesSubviews = NO;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
@@ -883,7 +895,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		
 		_timeRowsView = [[MGCTimeRowsView alloc]initWithFrame:CGRectZero];
         _timeRowsView.delegate = self;
-        _timeRowsView.timeColor = self.timeSeparatorsColor;
+        _timeRowsView.timeColor = [UIColor grayColor];
         _timeRowsView.currentTimeColor = self.currentTimeColor;
 		_timeRowsView.hourSlotHeight = self.hourSlotHeight;
         _timeRowsView.hourRange = self.hourRange;
