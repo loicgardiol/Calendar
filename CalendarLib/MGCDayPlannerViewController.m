@@ -54,7 +54,12 @@
         [self.view addSubview:dayPlannerView];
         NSLayoutConstraint* top = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
         NSLayoutConstraint* left = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
-        NSLayoutConstraint* bottom = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+        NSLayoutConstraint* bottom;
+        if (@available(iOS 26, *)) {
+            bottom = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+        } else {
+            bottom =  [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+        }
         NSLayoutConstraint* right = [NSLayoutConstraint constraintWithItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:dayPlannerView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
         [self.view addConstraints:@[top, left, bottom, right]];
     } else {
