@@ -31,10 +31,10 @@
 
 // functions to align coordinates on pixel boundaries
 
-CGRect MGCAlignedRect(CGRect rect);
-CGRect MGCAlignedRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
-CGSize MGCAlignedSize(CGSize size);
-CGSize MGCAlignedSizeMake(CGFloat width, CGFloat height);
-CGPoint MGCAlignedPoint(CGPoint point);
-CGPoint MGCAlignedPointMake(CGFloat x, CGFloat y);
-CGFloat MGCAlignedFloat(CGFloat f);
+CGRect MGCAlignedRect(CGRect rect, CGFloat scale);
+CGRect MGCAlignedRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height, CGFloat scale);
+CGSize MGCAlignedSize(CGSize size, CGFloat scale);
+CGSize MGCAlignedSizeMake(CGFloat width, CGFloat height, CGFloat scale);
+CGPoint MGCAlignedPoint(CGPoint point, CGFloat scale);
+CGPoint MGCAlignedPointMake(CGFloat x, CGFloat y, CGFloat scale);
+CGFloat MGCAlignedFloat(CGFloat f, CGFloat scale);

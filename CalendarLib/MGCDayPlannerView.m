@@ -260,7 +260,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     CGFloat yCenterOffset = self.timeScrollView.contentOffset.y + self.timeScrollView.bounds.size.height / 2.;
     NSTimeInterval ti = [self timeFromOffset:yCenterOffset rounding:0];
    
-    _hourSlotHeight = fminf(fmaxf(MGCAlignedFloat(hourSlotHeight), kMinHourSlotHeight), kMaxHourSlotHeight);
+    CGFloat scale = self.traitCollection.displayScale;
+    _hourSlotHeight = fminf(fmaxf(MGCAlignedFloat(hourSlotHeight, scale), kMinHourSlotHeight), kMaxHourSlotHeight);
     
     self.timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
     [self.timedEventsViewLayout invalidateLayout];
@@ -285,7 +286,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	NSUInteger numberOfDays = MIN(self.numberOfVisibleDays, self.numberOfLoadedDays);
     CGFloat width = (self.bounds.size.width - self.timeColumnWidth) / numberOfDays;
 	
-	return MGCAlignedSizeMake(width, height);
+    CGFloat scale = self.traitCollection.displayScale;
+	return MGCAlignedSizeMake(width, height, scale);
 }
 
 // public

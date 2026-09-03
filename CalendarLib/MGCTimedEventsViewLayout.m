@@ -94,7 +94,8 @@
                 rect.size.width = self.dayColumnSize.width;
                 rect.size.height = fmax(self.minimumVisibleHeight, rect.size.height);
                 
-                cellAttribs.frame = MGCAlignedRect(CGRectInset(rect , 0, 1));
+                CGFloat scale = self.collectionView.traitCollection.displayScale;
+                cellAttribs.frame = MGCAlignedRect(CGRectInset(rect , 0, 1), scale);
                 cellAttribs.visibleHeight = cellAttribs.frame.size.height;
                 
                 [attribs addObject:cellAttribs];
@@ -163,8 +164,9 @@
 		
 		CGFloat x = section * self.dayColumnSize.width + groupOffset;
 		
+		CGFloat scale = self.collectionView.traitCollection.displayScale;
 		for (MGCEventCellLayoutAttributes* attribs in [layoutGroup reverseObjectEnumerator]) {
-			attribs.frame = MGCAlignedRectMake(x, attribs.frame.origin.y, colWidth, attribs.frame.size.height);
+			attribs.frame = MGCAlignedRectMake(x, attribs.frame.origin.y, colWidth, attribs.frame.size.height, scale);
 			x += colWidth;
 		}
 	}

@@ -33,42 +33,42 @@
 #import "MGCAlignedGeometry.h"
 
 
-CGRect MGCAlignedRect(CGRect rect)
+CGRect MGCAlignedRect(CGRect rect, CGFloat scale)
 {
-    CGFloat scale = [UIScreen mainScreen].scale;
+    if (scale <= 0) scale = 1.0;
     return CGRectMake(floorf(rect.origin.x * scale) / scale, floorf(rect.origin.y * scale) / scale, ceilf(rect.size.width * scale) / scale, ceilf(rect.size.height * scale) / scale);
 }
 
-CGRect MGCAlignedRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+CGRect MGCAlignedRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height, CGFloat scale)
 {
-    return MGCAlignedRect(CGRectMake(x, y, width, height));
+    return MGCAlignedRect(CGRectMake(x, y, width, height), scale);
 }
 
-CGSize MGCAlignedSize(CGSize size)
+CGSize MGCAlignedSize(CGSize size, CGFloat scale)
 {
-    CGFloat scale = [UIScreen mainScreen].scale;
+    if (scale <= 0) scale = 1.0;
     return CGSizeMake(ceilf(size.width * scale) / scale, ceilf(size.height * scale) / scale);
 }
 
-CGSize MGCAlignedSizeMake(CGFloat width, CGFloat height)
+CGSize MGCAlignedSizeMake(CGFloat width, CGFloat height, CGFloat scale)
 {
-    return MGCAlignedSize(CGSizeMake(width, height));
+    return MGCAlignedSize(CGSizeMake(width, height), scale);
 }
 
-CGPoint MGCAlignedPoint(CGPoint point)
+CGPoint MGCAlignedPoint(CGPoint point, CGFloat scale)
 {
-    CGFloat scale = [UIScreen mainScreen].scale;
+    if (scale <= 0) scale = 1.0;
     return CGPointMake(floorf(point.x * scale) / scale, floorf(point.y * scale) / scale);
 }
 
-CGPoint MGCAlignedPointMake(CGFloat x, CGFloat y)
+CGPoint MGCAlignedPointMake(CGFloat x, CGFloat y, CGFloat scale)
 {
-    return MGCAlignedPoint(CGPointMake(x, y));
+    return MGCAlignedPoint(CGPointMake(x, y), scale);
 }
 
-CGFloat MGCAlignedFloat(CGFloat f)
+CGFloat MGCAlignedFloat(CGFloat f, CGFloat scale)
 {
-    CGFloat scale = [UIScreen mainScreen].scale;
+    if (scale <= 0) scale = 1.0;
     return roundf(f * scale) / scale;
 }
 

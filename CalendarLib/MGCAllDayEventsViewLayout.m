@@ -156,7 +156,8 @@ static const CGFloat kCellInset = 4.;
 		width -= kCellInset;
 	}
 	
-	CGRect rect = MGCAlignedRectMake(x, y, width, self.eventCellHeight);
+	CGFloat scale = self.collectionView.traitCollection.displayScale;
+	CGRect rect = MGCAlignedRectMake(x, y, width, self.eventCellHeight, scale);
 	return CGRectInset(rect, kCellSpacing, 0);
 }
 

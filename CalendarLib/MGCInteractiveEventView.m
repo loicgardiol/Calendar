@@ -75,7 +75,7 @@
 		_forbiddenSignLayer = [CATextLayer layer];
 		_forbiddenSignLayer.string =   @"\u26D4"; //@"\U0001F6AB"; //@"\u20E0"
 		_forbiddenSignLayer.fontSize = 16;
-		_forbiddenSignLayer.contentsScale = [[UIScreen mainScreen] scale];
+		_forbiddenSignLayer.contentsScale = self.traitCollection.displayScale > 0 ? self.traitCollection.displayScale : 1.0;
 		_forbiddenSignLayer.alignmentMode = kCAAlignmentCenter;
 		_forbiddenSignLayer.frame = CGRectMake(0,0,30,30);
 		_forbiddenSignLayer.zPosition = 10;

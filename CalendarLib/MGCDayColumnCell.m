@@ -158,11 +158,12 @@ static const CGFloat dotSize = 4;
     
     // border
     CGRect borderFrame = CGRectZero;
+    CGFloat scale = self.traitCollection.displayScale > 0 ? self.traitCollection.displayScale : 1.0;
     if (self.accessoryTypes & MGCDayColumnCellAccessoryBorder) {
-        borderFrame = CGRectMake(0, self.headerHeight, 1./[UIScreen mainScreen].scale, self.contentView.bounds.size.height-self.headerHeight);
+        borderFrame = CGRectMake(0, self.headerHeight, 1. / scale, self.contentView.bounds.size.height - self.headerHeight);
     }
     else if (self.accessoryTypes & MGCDayColumnCellAccessorySeparator) {
-        borderFrame = CGRectMake(0, 0, 2./[UIScreen mainScreen].scale, self.contentView.bounds.size.height);
+        borderFrame = CGRectMake(0, 0, 2. / scale, self.contentView.bounds.size.height);
     }
     
     self.leftBorder.frame = borderFrame;

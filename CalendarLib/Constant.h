@@ -10,13 +10,6 @@
 
 #define APP_NAME  @"CalendarDemo"
 
-#define IS_IPHONE_4S        [[UIScreen mainScreen] bounds].size.height == 480
-#define IS_IPHONE_5         [[UIScreen mainScreen] bounds].size.height == 568
-#define IS_IPHONE_6         [[UIScreen mainScreen] bounds].size.height == 667
-#define IS_IPHONE_6_PLUS    [[UIScreen mainScreen] bounds].size.height == 736
-
-#define DeviceHeight   [UIScreen mainScreen].bounds.size.height
-#define DeviceWidth    [UIScreen mainScreen].bounds.size.width
 #define IOS7VERSION ([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0?YES:NO)
 
 
