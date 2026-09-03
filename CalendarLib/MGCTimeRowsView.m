@@ -188,7 +188,8 @@
     CGRect rectTimeMark = CGRectMake(kSpacing, y - markSize.height/2., markSizeMax.width, markSize.height);
     
     BOOL drawTimeMark = self.timeMark != 0 && [self canDisplayTime:self.timeMark];
-    CGFloat lineWidth = 1. / [UIScreen mainScreen].scale;
+    CGFloat scale = self.traitCollection.displayScale > 0 ? self.traitCollection.displayScale : 1.0;
+    CGFloat lineWidth = 1. / scale;
     
 	// draw the hour marks
 	for (NSUInteger i = self.hourRange.location; i <=  NSMaxRange(self.hourRange); i++) {
@@ -196,8 +197,8 @@
         markAttrStr = [self attributedStringForTimeMark:MGCDayPlannerTimeMarkHeader time:(i % 24)*3600];
         markSize = [markAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
         
-        y = MGCAlignedFloat((i - self.hourRange.location) * self.hourSlotHeight + self.insetsHeight) - lineWidth * .5;
-		CGRect r = MGCAlignedRectMake(kSpacing, y - markSize.height / 2., markSizeMax.width, markSize.height);
+        y = MGCAlignedFloat((i - self.hourRange.location) * self.hourSlotHeight + self.insetsHeight, scale) - lineWidth * .5;
+		CGRect r = MGCAlignedRectMake(kSpacing, y - markSize.height / 2., markSizeMax.width, markSize.height, scale);
 
 		if (!CGRectIntersectsRect(r, rectCurTime) || !self.showsCurrentTime) {
             [markAttrStr drawInRect:r];
@@ -211,7 +212,7 @@
 		CGContextStrokePath(context);
 		
 		if (self.showsHalfHourLines && i < NSMaxRange(self.hourRange)) {
-			y = MGCAlignedFloat(y + self.hourSlotHeight/2.) - lineWidth * .5;
+			y = MGCAlignedFloat(y + self.hourSlotHeight/2., scale) - lineWidth * .5;
 			CGContextSetLineDash(context, 0, dash, 2);
 			CGContextMoveToPoint(context, self.timeColumnWidth, y),
 			CGContextAddLineToPoint(context, self.timeColumnWidth + rect.size.width, y);
